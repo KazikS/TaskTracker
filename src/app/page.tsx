@@ -1,66 +1,77 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import TaskList from "../components/tasks/TaskList";
+import TaskForm from "@/components/tasks/TaskForm";
+import { useEffect, useState } from "react";
+import { TaskType } from "@/types/task";
+import { Flex } from "@chakra-ui/react";
 
 export default function Home() {
+  const [taskList, setTaskList] = useState<TaskType[]>(() => {
+    if (typeof window === "undefined") return;
+
+    const saved = localStorage.getItem("tasks");
+    if (saved) {
+      return JSON.parse(saved);
+    } else {
+      return [];
+    }
+  });
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(taskList));
+  }, [taskList]);
+
+  const parseDateString = (date: string) => {
+    return new Date(date).getTime();
+  };
+
+  const deleteTask = (id: string) => {
+    const newArray = taskList.filter((e) => e.id !== id);
+    setTaskList(newArray);
+  };
+
+  const addTask = (title: string, description: string, deadline: string) => {
+    const now = Math.floor(new Date().getTime());
+    console.log(now);
+    const newTask: TaskType = {
+      id: globalThis.crypto.randomUUID(),
+      title,
+      description,
+      dueDate: parseDateString(deadline),
+      createdAt: now,
+      status: "preparing",
+    };
+
+    setTaskList([...taskList, newTask]);
+  };
+
+  const updateTaskStatus = (id: string) => {
+    setTaskList(
+      taskList.map((task) => {
+        if (task.id !== id) {
+          return task;
+        }
+        const statusArray: TaskType["status"][] = [
+          "preparing",
+          "inProgress",
+          "completed",
+        ];
+        const currentIndex = statusArray.indexOf(task.status);
+        const nextIndex = (currentIndex + 1) % statusArray.length;
+        const nextStatus = statusArray[nextIndex];
+
+        return { ...task, status: nextStatus };
+      })
+    );
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <Flex flexDirection="column">
+      <TaskForm onAdd={addTask} />
+      <TaskList
+        tasksArray={taskList}
+        onDelete={deleteTask}
+        updateTaskStatus={updateTaskStatus}
+      />
+    </Flex>
   );
 }
