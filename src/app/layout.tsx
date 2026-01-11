@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Provider } from "@/components/ui/provider";
+import { Provider } from "@/shared/theme/provider";
 import Header from "@/components/ui/Header";
 import { Box } from "@chakra-ui/react";
 
@@ -14,11 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className="dark" suppressHydrationWarning>
+    <html lang="ru" className="light" suppressHydrationWarning>
       <body>
         <Provider>
           <Header />
-          <Box margin="auto" maxW="1200px">{children}</Box>
+          <Box margin="auto" maxW="1200px" px="8">{children}</Box>
         </Provider>
       </body>
     </html>

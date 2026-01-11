@@ -1,17 +1,21 @@
 "use client";
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 
 export default function Header() {
   return (
     <Flex
       w="100vw"
-      bgColor="black"
+      bgGradient="to-r"
+      gradientFrom="accentPurple.light"
+      gradientTo="accentPurple.dark"
       py="4"
       alignItems="center"
-      justifyContent="center"
+      justifyContent="space-between"
       mb='5'
+      px="5"
     >
-      <Text color="white">SABKAZZ</Text>
+      <Heading color="white">таск трекер</Heading>
+      <Text>by Sabkazz</Text>
     </Flex>
   );
 }

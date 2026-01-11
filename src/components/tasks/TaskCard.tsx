@@ -14,7 +14,7 @@ export default function TaskCard({
   updateTaskStatus: (id: string) => void;
 }) {
   return (
-    <Card.Root px="4">
+    <Card.Root px="4" w="full" bgColor="white">
       <Card.Header
         display="flex"
         flexDirection="row"
@@ -23,7 +23,7 @@ export default function TaskCard({
         alignItems="center"
         px={0}
       >
-        <Card.Title maxW="2/3">{task.title}</Card.Title>
+        <Card.Title maxW="2/3" color="text.heading">{task.title}</Card.Title>
         <Badge
           variant="solid"
           w="fit"
@@ -38,10 +38,10 @@ export default function TaskCard({
           {TaskStatus[task.status].label}
         </Badge>
       </Card.Header>
-      <Card.Description mt="10">{task.description}</Card.Description>
+      <Card.Description mt="10" color="text.body">{task.description}</Card.Description>
       <Card.Footer mt="8" p="0" pb="3">
         <Flex justifyContent="space-between" alignItems="center" flex="1">
-          <Flex flexDir="column">
+          <Flex flexDir="column" color="text.subtle">
             <Text color="gray.600" fontSize={12} mr="2">
               Создано: {formatDate(task.createdAt)}
             </Text>

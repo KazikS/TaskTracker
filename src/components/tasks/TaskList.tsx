@@ -11,12 +11,12 @@ export default function TaskList({
   onDelete: (id: string) => void;
   updateTaskStatus: (id: string) => void;
 }) {
-  if (tasksArray.length === 0) {
+  if (!tasksArray) {
     return <Text>Задачи отсутствуют</Text>;
   }
 
   return (
-    <Grid templateColumns="repeat(3, 1fr)" gap="2">
+    <Grid templateColumns="repeat(3, 1fr)" gap="3" w="full">
       {tasksArray.map((task) => (
         <Flex key={task.id} justifyContent="center">
           <TaskCard task={task} onDelete={onDelete} updateTaskStatus={updateTaskStatus}/>
