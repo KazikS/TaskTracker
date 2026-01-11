@@ -10,5 +10,4 @@ export const globalCss = defineGlobalStyles({
   body: {
     background: 'pageBg',
   },
-
 });

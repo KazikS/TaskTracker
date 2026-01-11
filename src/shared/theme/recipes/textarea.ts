@@ -14,6 +14,7 @@ export const textareaRecipe = defineRecipe({
       outline: {
         borderWidth: "2px",
         borderColor: "border.input",
+        fontSize: {base: '16px', md: '14px'}
       },
     },
   },

@@ -13,7 +13,8 @@ export const inputRecipe = defineRecipe({
     variant: {
       outline: {
         borderWidth: "2px",
-        borderColor: 'border.input'
+        borderColor: 'border.input',
+        fontSize: {base: '16px', md: '14px'}
       },
     },
   },
