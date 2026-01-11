@@ -16,10 +16,22 @@ export default function TaskList({
   }
 
   return (
-    <Grid templateColumns="repeat(3, 1fr)" gap="3" w="full">
+    <Grid
+      templateColumns={{
+        base: "1fr",
+        md: "repeat(2, 1fr)",
+        lg: "repeat(3, 1fr)",
+      }}
+      gap="3"
+      w="full"
+    >
       {tasksArray.map((task) => (
         <Flex key={task.id} justifyContent="center">
-          <TaskCard task={task} onDelete={onDelete} updateTaskStatus={updateTaskStatus}/>
+          <TaskCard
+            task={task}
+            onDelete={onDelete}
+            updateTaskStatus={updateTaskStatus}
+          />
         </Flex>
       ))}
     </Grid>

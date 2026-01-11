@@ -6,8 +6,10 @@ import {
   Input,
   Textarea,
   Text,
+  Box,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { LuPlus } from "react-icons/lu";
 import { withMask } from "use-mask-input";
 
 type TaskFormProps = {
@@ -40,15 +42,16 @@ export default function TaskForm({ onAdd }: TaskFormProps) {
       w="full"
       mb="8"
     >
-
       <Text color="text.heading" fontWeight="semibold" fontSize="lg" mb="5">
         ➕ Новая задача
       </Text>
 
-
       <Field.Root required mb="4">
         <Field.Label color="text.body" fontWeight="medium" fontSize="sm">
-          Название <Text as="span" color="red.500">*</Text>
+          Название{" "}
+          <Text as="span" color="red.500">
+            *
+          </Text>
         </Field.Label>
         <Input
           placeholder="Введите название задачи"
@@ -88,7 +91,10 @@ export default function TaskForm({ onAdd }: TaskFormProps) {
 
       <Flex justifyContent="flex-end">
         <Button variant="solid" onClick={handleClick}>
-          Создать задачу
+          <Box display={{ base: "flex", md: "none" }} alignItems="center">
+            <LuPlus size={20} />
+          </Box>
+          <Box display={{ base: "none", md: "block" }}>Создать задачу</Box>
         </Button>
       </Flex>
     </Flex>
